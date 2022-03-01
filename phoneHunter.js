@@ -12,16 +12,33 @@ const getURL = () =>{
 // output = search e jei phone pabo ta show korbo browser e 
 // step1:url e jeta pabo tar data array pabo 
 // step2:oi data loop through kore oikoyta card create kore parent div e append korbo
+// step3:jodi data 20 er beshi hoy tahole 20 porjonto slice kore show korbo 
+// step4:20 er por er gulo ekta button click korle show korbo
 // Corner case:jodi kono result na pawa jay tahole error show korte hobe 
+
 showPhonesOnBrowser = () => {
     toggleElement("spinner", "block")
     fetch(`${getURL()}`)
     .then(response => response.json())
     .then(data =>{
         if(data.status){
-            console.log("length of phones:", data.data.length);
-            showPhones(data.data)
-            toggleElement("spinner", "none")}
+            if(data.data.length <= 20){
+                showPhones(data.data)
+                
+            }
+            else{
+                const first20 = data.data.slice(0, 20);
+                const last = data.data.slice(20, data.data.length)
+                showPhones(first20)
+                toggleElement("seeMore", "inline-block");
+                document.getElementById("seeMore").addEventListener("click", function(){
+                    console.log("see the last phones:", last)
+                    showPhones(last)
+                })
+            }
+            toggleElement("spinner", "none")
+            }
+            
         else{
             toggleElement("alert", "block");
             toggleElement("phones", "none");
@@ -29,6 +46,8 @@ showPhonesOnBrowser = () => {
 
     })
 }
+
+
 const toggleElement = (elemntId, displayState) =>{
     document.getElementById(elemntId).style.display = displayState;
 }
