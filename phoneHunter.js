@@ -5,6 +5,7 @@
 const getURL = () =>{
     const searchText = document.getElementById("searchText").value;
     const searchURL = `https://openapi.programming-hero.com/api/phones?search=${searchText}`;
+    document.getElementById("searchText").value  = "";
     return searchURL
 }
 
@@ -27,14 +28,8 @@ showPhonesOnBrowser = () => {
                 
             }
             else{
-                const first20 = data.data.slice(0, 20);
-                const last = data.data.slice(20, data.data.length)
-                showPhones(first20)
-                toggleElement("seeMore", "inline-block");
-                document.getElementById("seeMore").addEventListener("click", function(){
-                    console.log("see the last phones:", last)
-                    showPhones(last)
-                })
+                showPhonesMoreThan20(data.data)
+                
             }
             toggleElement("spinner", "none")
             }
@@ -46,6 +41,28 @@ showPhonesOnBrowser = () => {
 
     })
 }
+// function = show phones on browser when phone more than 20 
+// step1: listOfPhone k 2 ta list korte hobe list1 = 1 to 20 , list2 = 21 to last
+// step2:first20 er jonno shob phone show korbo 
+// step3:ekta button show korbo jeta click korle baki phones show korbe 
+// step4:ager 20 phones khali kora jabe na
+function showPhonesMoreThan20(listOfPhone){
+    const first20 = listOfPhone.slice(0, 20);
+    const phoneAbove20 = listOfPhone.slice(20, listOfPhone.length)
+    toggleElement("alert", "none");
+    showPhones(first20)
+    toggleElement("seeMore", "inline-block");
+    document.getElementById("seeMore").addEventListener("click", function(){
+    const phoneAbove20 = listOfPhone.slice(20, listOfPhone.length)
+        console.log("see the last phones:", phoneAbove20 )
+        phoneAbove20.forEach(showEachPhone)
+        toggleElement("phones", "flex")
+        
+    })
+
+
+}
+
 
 
 const toggleElement = (elemntId, displayState) =>{
@@ -117,5 +134,5 @@ function getKeyValueOfObject(object){
     }
     return keyValues;
 }
-// getKeyValueOfObject()
+
 
