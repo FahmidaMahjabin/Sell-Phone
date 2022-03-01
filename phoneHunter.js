@@ -13,12 +13,15 @@ const getURL = () =>{
 // step1:url e jeta pabo tar data array pabo 
 // step2:oi data loop through kore oikoyta card create kore parent div e append korbo
 // Corner case:jodi kono result na pawa jay tahole error show korte hobe 
-function showPhonesOnBrowser(){
+showPhonesOnBrowser = () => {
+    toggleElement("spinner", "block")
     fetch(`${getURL()}`)
     .then(response => response.json())
     .then(data =>{
         if(data.status){
-        showPhones(data.data)}
+            console.log("length of phones:", data.data.length);
+            showPhones(data.data)
+            toggleElement("spinner", "none")}
         else{
             toggleElement("alert", "block");
             toggleElement("phones", "none");
@@ -31,6 +34,7 @@ const toggleElement = (elemntId, displayState) =>{
 }
 const showPhones = (listOfPhone) =>{
     toggleElement("alert", "none");
+    document.getElementById("phones").innerHTML = "";
     listOfPhone.forEach(showEachPhone)
     toggleElement("phones", "flex")
 }
