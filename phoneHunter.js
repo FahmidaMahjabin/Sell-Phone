@@ -33,11 +33,15 @@ showPhonesOnBrowser = () => {
             }
             toggleElement("spinner", "none")
             }
+
             
         else{
             toggleElement("alert", "block");
             toggleElement("phones", "none");
+            toggleElement("spinner", "none")
         }
+        
+        
 
     })
 }
@@ -110,10 +114,10 @@ const showEachDetails = (phone) => {
     <p class = "fw-bold">Brand: ${phone.brand}</p>
     </div>
     <p class= "text-primary">released date: ${phone.releaseDate}</p>
-    <p class = "text-secondary">mainFeatures:
+    <p class = "text-primary">mainFeatures:
      ${getKeyValueOfObject(phone.mainFeatures)}</p>
     <br>
-    <p class = "text-secondary">Others:
+    <p class = "text-primary">Others:
     ${getKeyValueOfObject(phone.others)}</p>
     `
 
@@ -122,15 +126,9 @@ const showEachDetails = (phone) => {
 }
 
 function getKeyValueOfObject(object){
-    let keyValues = `<br>`;
+    let keyValues = "";
     for(let key in object){
-        // if(typeof(object[key] == "object")){
-        //     return getKeyValueOfObject(object.object[key])
-        // }
-        // else{
-            keyValues += `${key}: ${object[key]} `;
-        // }
-        
+        keyValues += `<p>${key}: ${object[key]} </p>`;   
     }
     return keyValues;
 }
