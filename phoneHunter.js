@@ -12,19 +12,31 @@ const getURL = () =>{
 // output = search e jei phone pabo ta show korbo browser e 
 // step1:url e jeta pabo tar data array pabo 
 // step2:oi data loop through kore oikoyta card create kore parent div e append korbo
+// Corner case:jodi kono result na pawa jay tahole error show korte hobe 
 function showPhonesOnBrowser(){
     fetch(`${getURL()}`)
     .then(response => response.json())
-    .then(data => showPhones(data.data))
-}
+    .then(data =>{
+        if(data.status){
+        showPhones(data.data)}
+        else{
+            toggleElement("alert", "block");
+            toggleElement("phones", "none");
+        }
 
+    })
+}
+const toggleElement = (elemntId, displayState) =>{
+    document.getElementById(elemntId).style.display = displayState;
+}
 const showPhones = (listOfPhone) =>{
+    toggleElement("alert", "none");
     listOfPhone.forEach(showEachPhone)
+    toggleElement("phones", "flex")
 }
 
 const showEachPhone = (phone) =>{
     const aPhone = document.createElement("div");
-    
     aPhone.innerHTML = `<div class = "card p-2 bg-light"><img src=${phone.image} class="card-img-top img-fluid" alt="...">
     <div class="card-body">
       <h5 class="card-title">${phone.phone_name}</h5>
@@ -33,3 +45,4 @@ const showEachPhone = (phone) =>{
     </div></div>`;
     document.getElementById("phones").appendChild(aPhone);
 }
+
