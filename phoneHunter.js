@@ -53,13 +53,14 @@ showPhonesOnBrowser = () => {
 function showPhonesMoreThan20(listOfPhone){
     const first20 = listOfPhone.slice(0, 20);
     const phoneAbove20 = listOfPhone.slice(20, listOfPhone.length)
+    document.getElementById("phones").innerHTML = "";
     toggleElement("alert", "none");
     showPhones(first20)
     toggleElement("seeMore", "inline-block");
     document.getElementById("seeMore").addEventListener("click", function(){
-    const phoneAbove20 = listOfPhone.slice(20, listOfPhone.length)
+        document.getElementById("phones").innerHTML = "";
         console.log("see the last phones:", phoneAbove20 )
-        phoneAbove20.forEach(showEachPhone)
+        showPhones(listOfPhone)
         toggleElement("phones", "flex")
         
     })
