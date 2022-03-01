@@ -53,8 +53,6 @@ const showEachPhone = (phone) =>{
 //     step1.3:get phone image and all data into toe body and show in a div
 
 const showPhoneDetail = (phoneModel) => {
-    
-    console.log(phoneModel);
     fetch(`https://openapi.programming-hero.com/api/phone/${phoneModel}`)
     .then(response => response.json())
     .then(data => showEachDetails(data.data))
@@ -64,7 +62,37 @@ const showPhoneDetail = (phoneModel) => {
 // step1:ekta card add korbo jate phone er shob detaile add korbo 
 // step2: card ta browser e innerHTML e add korbo
 const showEachDetails = (phone) => {
-        
+    console.log(phone);
+    document.getElementById("modalTitle").innerHTML = `
+    <h5 class = "text-center text-primary">${phone.name}</h5>`;
+    document.getElementById("modalBody").innerHTML = `
+    <div class= "text-center"><img class = "img-fluid" src = "${phone.image}">
+    <p class = "fw-bold">Brand: ${phone.brand}</p>
+    </div>
+    <p class= "text-primary">released date: ${phone.releaseDate}</p>
+    <p class = "text-secondary">mainFeatures:
+     ${getKeyValueOfObject(phone.mainFeatures)}</p>
+    <br>
+    <p class = "text-secondary">Others:
+    ${getKeyValueOfObject(phone.others)}</p>
+    `
+
+       
 
 }
+
+function getKeyValueOfObject(object){
+    let keyValues = `<br>`;
+    for(let key in object){
+        // if(typeof(object[key] == "object")){
+        //     return getKeyValueOfObject(object.object[key])
+        // }
+        // else{
+            keyValues += `${key}: ${object[key]} `;
+        // }
+        
+    }
+    return keyValues;
+}
+// getKeyValueOfObject()
 
