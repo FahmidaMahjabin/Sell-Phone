@@ -114,16 +114,21 @@ const showEachDetails = (phone) => {
     <div class= "text-center"><img class = "img-fluid" src = "${phone.image}">
     <p class = "fw-bold">Brand: ${phone.brand}</p>
     </div>
-    <p class= "text-primary">released date: ${phone.releaseDate}</p>
+    <p class= "text-primary">released date: ${getReleaseDate(phone)}</p>
     <p class = "text-primary">mainFeatures:
      ${getKeyValueOfObject(phone.mainFeatures)}</p>
     <br>
     <p class = "text-primary">Others:
     ${getKeyValueOfObject(phone.others)}</p>
     `
-
-       
-
+}
+const getReleaseDate = phone =>{
+    if((phone.releaseDate.length) < 1){
+        return `<span>No release Date found</span>`
+    }
+    else{
+        return phone.releaseDate;
+    }
 }
 
 function getKeyValueOfObject(object){
